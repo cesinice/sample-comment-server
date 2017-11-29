@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/kataras/iris"
+	"sample-comment-server/controllers"
 )
 
 // CommentBook is responsible of the webserver application framework container.
@@ -27,6 +28,10 @@ func main() {
 	book.app.Get("/", func(context iris.Context) {
 		context.WriteString("Hello World")
 	})
+
+	// Registering a Controller Grouped Route
+	// Through an instance of our CommentsController
+	book.app.Controller("/comments", new(controllers.CommentsController))
 
 	// Running the web server instance at the port 8080
 	book.app.Run(iris.Addr(":8080"))
