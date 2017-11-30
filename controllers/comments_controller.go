@@ -5,11 +5,15 @@ import (
 	"encoding/json"
 )
 
+// Comments Controller extends our BaseController.
+// This allows to use Iris reflection and controllers methods.
+// Also to access to our database through gORM.
 type CommentsController struct {
 	BaseController
 }
 
 // CommentResponse is the basic data structure for a comment Response
+// Then parsing it to JSON data through json.Marshall
 type CommentResponse struct {
 	Id            int        `json:"id"`
 	Content       string     `json:"content"`
@@ -20,7 +24,10 @@ type CommentResponse struct {
 }
 
 // This handle the GET requests through the Comments Controller
+// TODO : Implement data retrieval through database!
 func (c *CommentsController) Get() []byte {
+
+	// Mock Comment Response
 	users := &[]CommentResponse{
 		{
 			Id: 1,
@@ -36,8 +43,10 @@ func (c *CommentsController) Get() []byte {
 		},
 	}
 
+	// Formatting our Response Structure to JSON.
 	response, err := json.Marshal(users)
 
+	// In case of Marshal errors, please panic.
 	if err != nil {
 		panic(err)
 	}
