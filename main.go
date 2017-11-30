@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"log"
+	"sample-comment-server/models"
 )
 
 // CommentBook is responsible of the webserver application framework container.
@@ -141,6 +142,8 @@ func New() *CommentBook {
 func main() {
 	// Requesting a new instance of our application
 	book := New().initConfiguration().useGorm()
+
+	book.db.AutoMigrate(&models.Comment{})
 
 	// This will recover any panic attack go may have!
 	book.app.Use(recover.New())

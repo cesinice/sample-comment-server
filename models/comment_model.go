@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
 )
 
@@ -9,13 +8,12 @@ import (
 // It extends gorm.Model structure and allow us to execute operations
 // on it through gORM instance.
 type Comment struct {
-	gorm.Model
-	Id           uint64      `gorm:"primary_key"`
+	Id           uint64     `gorm:"primary_key"`
 	Content      string     `gorm:"size:2000"`
 	Author       string     `gorm:"size:100"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
-	DeletedAt    *time.Time
+	DeletedAt    *time.Time `sql:"index"`
 }
 
 // TableName returns and indicate to gORM the model table name
