@@ -1,8 +1,5 @@
 package main
 
-<<<<<<< HEAD
-func main() {
-=======
 import (
 	"github.com/kataras/iris"
 	"sample-comment-server/controllers"
@@ -166,5 +163,4 @@ func main() {
 
 	// Running the web server instance
 	book.RunServer()
->>>>>>> release/1.0
 }
