@@ -8,12 +8,12 @@ import (
 // It extends gorm.Model structure and allow us to execute operations
 // on it through gORM instance.
 type Comment struct {
-	Id           uint64     `gorm:"primary_key"`
-	Content      string     `gorm:"size:2000"`
-	Author       string     `gorm:"size:100"`
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	DeletedAt    *time.Time `sql:"index"`
+	Id           uint64     `gorm:"primary_key" json:"id,omitempty"`
+	Content      string     `gorm:"size:2000" json:"content"`
+	Author       string     `gorm:"size:100" json:"author"`
+	CreatedAt    time.Time  `json:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at,omitempty"`
+	DeletedAt    *time.Time `sql:"index" json:"deleted_at,omitempty"`
 }
 
 // TableName returns and indicate to gORM the model table name
