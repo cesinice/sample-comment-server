@@ -118,7 +118,6 @@ func New() *CommentBook {
 
 // Main is responsible for the application running instance.
 func main() {
-	go func() {}()
 	// Requesting a new instance of our application
 	book := New()
 
