@@ -29,8 +29,6 @@ type CommentData struct {
 func (c *CommentsController) Get() []byte {
 
 	var comments models.Comment
-
-	// Mock Comment Response
 	users := c.DB.Find(&comments).Value
 
 	// Formatting our Response Structure to JSON.
