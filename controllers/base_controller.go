@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/kataras/iris/mvc"
+	_ "github.com/lib/pq"
 )
 
 // BaseController is a basic controller extending Iris native Controller.

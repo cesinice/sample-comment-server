@@ -3,6 +3,7 @@ package controllers
 import (
 	"time"
 	"encoding/json"
+	"sample-comment-server/models"
 )
 
 // Comments Controller extends our BaseController.
@@ -14,34 +15,21 @@ type CommentsController struct {
 
 // CommentResponse is the basic data structure for a comment Response
 // Then parsing it to JSON data through json.Marshall
-type CommentResponse struct {
-	Id            int        `json:"id"`
+type CommentData struct {
+	Id            int        `json:"id,omitempty"`
 	Content       string     `json:"content"`
 	Author        string     `json:"author"`
 	CreatedAt     time.Time  `json:"created_at"`
-	UpdatedAt     time.Time  `json:"updated_at"`
-	DeletedAt     *time.Time `json:"deleted_at"`
+	UpdatedAt     time.Time  `json:"updated_at,omitempty"`
+	DeletedAt     *time.Time `json:"deleted_at,omitempty"`
 }
 
 // This handle the GET requests through the Comments Controller
 // TODO : Implement data retrieval through database!
 func (c *CommentsController) Get() []byte {
 
-	// Mock Comment Response
-	users := &[]CommentResponse{
-		{
-			Id: 1,
-			Content: `Meilleure conférence de l'Exia ! J'avoue, je suis un peu biaisé..`,
-			Author: "Tony BRIET",
-			CreatedAt: time.Now(),
-		},
-		{
-			Id: 2,
-			Content: `Mon dieu, il est mauvais !`,
-			Author: "Antoine Orfila",
-			CreatedAt: time.Now(),
-		},
-	}
+	var comments models.Comment
+	users := c.DB.Find(&comments).Value
 
 	// Formatting our Response Structure to JSON.
 	response, err := json.Marshal(users)
@@ -54,3 +42,26 @@ func (c *CommentsController) Get() []byte {
 	return response
 }
 
+// This allows to post a comment
+func (c *CommentsController) Post() []byte {
+	var jsonRequest CommentData
+	c.Ctx.ReadJSON(&jsonRequest)
+
+	comment := models.Comment{Content: jsonRequest.Content, Author: jsonRequest.Author, CreatedAt: time.Now()}
+	result, _ := json.Marshal(c.DB.Create(&comment).Value)
+
+	return result
+}
+
+// This method allows to delete a comment using its id
+func (c *CommentsController) DeleteBy(id int64) {
+	// We need to refer to a model to use the ORM and the request data.
+	var jsonRequest CommentData
+	var model models.Comment
+
+	// Reading JSON Request
+	c.Ctx.ReadJSON(&jsonRequest)
+
+	// Deleting the entry if its possible
+	c.DB.First(&model, id).Delete(model)
+}

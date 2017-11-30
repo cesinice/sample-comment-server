@@ -1,4 +1,12 @@
 {
   "serverName": "Comment",
-  "port": "8080"
+  "port": "8080",
+  "db": {
+    "dialect": "postgres",
+    "host": "localhost",
+    "user": "root",
+    "dbname": "",
+    "password": "",
+    "sslmode": "disable"
+  }
 }
